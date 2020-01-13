@@ -1,0 +1,71 @@
+{
+  "pages": [
+    {
+      "path": "pages/index",
+      "style": {
+        "navigationBarTitleText": "我"
+      }
+    },
+    {
+      "path": "pages/ranking",
+      "style": {
+        "navigationBarTitleText": "排行榜"
+      }
+    },
+    {
+      "path": "pages/group",
+      "style": {
+        "navigationBarTitleText": "圈子"
+      }
+    },
+    {
+      "path": "pages/check-in",
+      "style": {
+        "navigationBarTitleText": "打卡"
+      }
+    },
+    {
+      "path": "pages/check-in/book",
+      "style": {
+        "navigationBarTitleText": "今日打卡"
+      }
+    },
+    {
+      "path": "pages/settings",
+      "style": {
+        "navigationBarTitleText": "设置"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "",
+    "navigationBarBackgroundColor": "#D51E7B",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#333",
+    "selectedColor": "#D51E7B",
+    "backgroundColor": "#F8F8F8",
+    "list": [
+      {
+        "pagePath": "pages/ranking",
+        "text": "排行榜",
+        "iconPath": "static/ranking.png",
+        "selectedIconPath": "static/ranking-color.png"
+      },
+      {
+        "pagePath": "pages/group",
+        "text": "圈子",
+        "iconPath": "static/group.png",
+        "selectedIconPath": "static/group-color.png"
+      },
+      {
+        "pagePath": "pages/index",
+        "text": "我",
+        "iconPath": "static/riqi.png",
+        "selectedIconPath": "static/riqi-color.png"
+      }
+    ]
+  }
+}
