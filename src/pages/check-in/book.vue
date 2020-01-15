@@ -1,7 +1,7 @@
 <template>
   <view class="page">
-    <view class="group">
-      <view class="group-title">旧约</view>
+    <view class="bookshelf">
+      <view class="bookshelf-title">旧约</view>
       <view class="books">
         <view class="book">
           <view class="short-name">创</view>
@@ -35,8 +35,8 @@
         </view>
       </view>
     </view>
-    <view class="group">
-      <view class="group-title">新约</view>
+    <view class="bookshelf">
+      <view class="bookshelf-title">新约</view>
       <view class="books">
         <view class="book">
           <view class="short-name">太</view>
@@ -56,7 +56,7 @@
 </template>
 
 <style lang="scss" scoped>
-.group-title {
+.bookshelf-title {
   padding: 0 1em;
   line-height: 2em;
   font-size: 30upx;
