@@ -14,7 +14,7 @@
           :class="{ 'chart-switch__on': view !== 'weekCount' }"
           @tap="switchView"
         />
-        <view class="chart-count">章数：{{totalCount}}</view>
+        <view class="chart-count">章数：{{totalCount || 0}}</view>
       </view>
       <canvas
         class="line-chart"
@@ -91,6 +91,7 @@ export default {
       if (Array.isArray(this.weeklyTotalCount)) {
         return this.weeklyTotalCount.slice(-1)[0];
       }
+      return null;
     },
 
     /**
@@ -101,7 +102,7 @@ export default {
         let total = 0;
         return this.weekCount.map(count => (total += count));
       }
-      return this.weekCount;
+      return null;
     }
   },
 
