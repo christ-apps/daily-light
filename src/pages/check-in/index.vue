@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import UniList from "../components/uni-list/uni-list";
-import UniListItem from "../components/uni-list-item/uni-list-item";
+import UniList from "@/components/uni-list/uni-list";
+import UniListItem from "@/components/uni-list-item/uni-list-item";
 export default {
   components: {
     UniList,
@@ -17,7 +17,7 @@ export default {
   methods: {
     add() {
       uni.navigateTo({
-        url: 'check-in/book'
+        url: 'book'
       })
     }
   }

@@ -19,7 +19,7 @@
       }
     },
     {
-      "path": "pages/check-in",
+      "path": "pages/check-in/index",
       "style": {
         "navigationBarTitleText": "打卡"
       }

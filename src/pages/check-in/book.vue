@@ -55,11 +55,17 @@
   </view>
 </template>
 
+<script>
+export default {
+  
+}
+</script>
+
 <style lang="scss" scoped>
 .bookshelf-title {
   padding: 0 1em;
   line-height: 2em;
-  font-size: 30upx;
+  font-size: 30rpx;
   color: $uni-bg-color;
   background-color: $uni-color-primary;
 }
@@ -75,11 +81,11 @@
   flex-basis: calc((100% + 3px) / 4);
   text-align: center;
   margin: 0 -1px -1px 0;
-  height: 150upx;
-  line-height: 150upx;
+  height: 150rpx;
+  line-height: 150rpx;
   border: 1px solid $uni-border-color;
   box-sizing: border-box;
-  font-size: 50upx;
+  font-size: 50rpx;
   color: $uni-color-primary;
 }
 </style>

@@ -20,7 +20,7 @@ export default {
   display: block;
   height: 100%;
   border: 1px solid;
-  border-radius: 750upx;
+  border-radius: 750rpx;
   box-sizing: border-box;
   overflow: hidden;
 }
