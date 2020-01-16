@@ -1,4 +1,35 @@
-// 自动注入url中的query参数值到data中
+/**
+ * 自动注入url中的query参数值到data中
+ * @example
+ * // 在main.js中注册插件
+ * import queryData from 'path-to/query-data'
+ * Vue.use(queryData, {
+ *   // 此处可自定义key值，不设置则使用默认值`queryData`
+ *   dataKey: 'queryData'
+ * })
+ *
+ * // 在页面组件中接收
+ * export default {
+ *   // 接收参数的类型只支持`String`和`Number`
+ *   queryData: {
+ *     name: String,
+ *     id: Number
+ *   },
+ *
+ *   // 在data段中可定义默认值
+ *   data() {
+ *     return {
+ *       name: '默认值'
+ *     }
+ *   }
+ * }
+ *
+ * // 打开页面并传参
+ * // id会转换成数字被接收
+ * // name传了一个空字符串，因此不会使用默认值
+ * // unuse参数未在组件中定义，不会被接收
+ * uni.navigateTo(`pages/some/page?id=1&name=&unuse=xxx`)
+ */
 export default {
   install(Vue, options) {
     const dataKey = (options && options.dataKey) || "queryData";
@@ -16,12 +47,6 @@ export default {
           for (const [prop, value] of Object.entries(config)) {
             if (typeof value === "function") {
               data[prop] = getDefaultValue(value);
-            } else if (typeof value === "object" && value !== null) {
-              if (typeof value.default !== "undefined") {
-                data[prop] = value.default;
-              } else {
-                data[prop] = getDefaultValue(value.type);
-              }
             } else {
               data[prop] = null;
             }
@@ -41,9 +66,6 @@ export default {
         } else if (typeof config === "object" && config !== null) {
           for (const [prop, type] of Object.entries(config)) {
             if (typeof option[prop] !== "string") continue;
-            if (typeof type === "object" && type !== null) {
-              type = type.type;
-            }
             switch (type) {
               case Number:
                 this[prop] = Number(option[prop]);

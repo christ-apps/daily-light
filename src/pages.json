@@ -15,7 +15,7 @@
     {
       "path": "pages/group",
       "style": {
-        "navigationBarTitleText": "圈子"
+        "navigationBarTitleText": "我的群"
       }
     },
     {
@@ -32,6 +32,12 @@
     },
     {
       "path": "pages/check-in/chapter"
+    },
+    {
+      "path": "pages/group/settings",
+      "style": {
+        "navigationBarTitleText": "群设置"
+      }
     },
     {
       "path": "pages/settings",
@@ -59,7 +65,7 @@
       },
       {
         "pagePath": "pages/group",
-        "text": "圈子",
+        "text": "群",
         "iconPath": "static/group.png",
         "selectedIconPath": "static/group-color.png"
       },

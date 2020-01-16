@@ -4,7 +4,7 @@
     <image class="avatar" :src="avatar" />
     <view class="nickname">{{nickname}}</view>
     <block v-if="star || star === 0">
-      <uni-icons type="star-filled" :size="30" color="#d51e7b" />
+      <uni-icons :type="star > 0 ? 'star-filled' : 'star'" :size="30" color="#d51e7b" />
       <view class="star">x{{star}}</view>
     </block>
     <view class="score">{{score}}</view>

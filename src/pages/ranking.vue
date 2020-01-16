@@ -131,7 +131,6 @@ export default {
   min-height: 80rpx;
   line-height: 80rpx;
   border: 1px solid $uni-color-primary;
-  border-bottom: none;
   border-radius: 15rpx 15rpx 0 0;
   text-align: center;
   color: $uni-color-primary;

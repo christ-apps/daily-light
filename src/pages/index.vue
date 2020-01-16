@@ -4,7 +4,7 @@
       <image class="avatar-icon" :src="avatar" />
       <navigator class="check-in" url="check-in/check-in" hover-class="none">打卡</navigator>
       <navigator class="setting" url="settings" hover-class="none">
-        <image class="setting-icon" src="../static/setting.png" />
+        <uni-icons type="gear-filled" :size="30" color="#333333" />
       </navigator>
     </view>
     <view class="charts">
@@ -46,13 +46,15 @@
 <script>
 import ProgressBar from "@/components/progress-bar";
 import TitleBar from "@/components/title-bar";
+import UniIcons from "@/components/uni-icons/uni-icons";
 import calcStyle from "@/util/calc-style.js";
 import uCharts from "@/u-charts/u-charts.js";
 import Mock from "mockjs";
 export default {
   components: {
     ProgressBar,
-    TitleBar
+    TitleBar,
+    UniIcons
   },
 
   data() {
@@ -297,11 +299,10 @@ export default {
   justify-content: space-between;
   min-height: 50px;
   padding: 0 15rpx;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid $uni-border-color;
 }
 
-.avatar-icon,
-.setting-icon {
+.avatar-icon {
   width: 30px;
   height: 30px;
   display: block;
