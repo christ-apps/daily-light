@@ -6,20 +6,6 @@ Vue.config.productionTip = false;
 
 // 自动注入url参数值到对应的data属性
 Vue.use(queryData);
-// Vue.mixin({
-//   onLoad(option) {
-//     for (const [prop, value] of Object.entries(option)) {
-//       switch (typeof this.$data[prop]) {
-//         case "string":
-//           this[prop] = value;
-//           break;
-//         case "number":
-//           this[prop] = Number(value);
-//           break;
-//       }
-//     }
-//   }
-// });
 
 App.mpType = "app";
 

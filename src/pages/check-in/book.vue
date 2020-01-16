@@ -1,7 +1,7 @@
 <template>
   <view class="page">
     <view class="bookshelf" v-for="shelf in books" :key="shelf.shelfname">
-      <view class="bookshelf-title">{{shelf.shelfname}}</view>
+      <title-bar>{{shelf.shelfname}}</title-bar>
       <view class="books">
         <navigator
           class="book"
@@ -17,7 +17,12 @@
 </template>
 
 <script>
+import TitleBar from "@/components/title-bar";
 export default {
+  components: {
+    TitleBar
+  },
+
   data() {
     return {
       books: null
@@ -122,14 +127,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.bookshelf-title {
-  padding: 0 1em;
-  line-height: 2em;
-  font-size: 30rpx;
-  color: $uni-bg-color;
-  background-color: $uni-color-primary;
-}
-
 .books {
   padding-bottom: 1px;
   display: flex;

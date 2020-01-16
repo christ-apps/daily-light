@@ -2,7 +2,7 @@
   <view class="page">
     <view class="header">
       <image class="avatar-icon" :src="avatar" />
-      <navigator class="check-in" url="check-in/index" hover-class="none">打卡</navigator>
+      <navigator class="check-in" url="check-in/check-in" hover-class="none">打卡</navigator>
       <navigator class="setting" url="settings" hover-class="none">
         <image class="setting-icon" src="../static/setting.png" />
       </navigator>
@@ -30,7 +30,7 @@
     </view>
     <view class="bookshelfs">
       <view class="bookshelf" v-for="shelf in books" :key="shelf.shelfname">
-        <view class="bookshelf-title">{{shelf.shelfname}}</view>
+        <title-bar>{{shelf.shelfname}}</title-bar>
         <view class="books">
           <view class="book" v-for="book in shelf.books" :key="book.bookname">
             <view class="short-name">{{book.bookname}}</view>
@@ -45,12 +45,14 @@
 
 <script>
 import ProgressBar from "@/components/progress-bar";
+import TitleBar from "@/components/title-bar";
 import calcStyle from "@/util/calc-style.js";
 import uCharts from "@/u-charts/u-charts.js";
 import Mock from "mockjs";
 export default {
   components: {
-    ProgressBar
+    ProgressBar,
+    TitleBar
   },
 
   data() {
@@ -358,14 +360,6 @@ export default {
 
 .chart-switch__on::after {
   transform: translateX(100%);
-}
-
-.bookshelf-title {
-  padding: 0 1em;
-  line-height: 2em;
-  font-size: 30rpx;
-  color: $uni-bg-color;
-  background-color: $uni-color-primary;
 }
 
 .books {
