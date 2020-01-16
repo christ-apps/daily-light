@@ -12,7 +12,7 @@ export default {
       default: 0
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -26,7 +26,9 @@ export default {
 }
 
 .progress {
+  width: 0;
   max-width: 100%;
+  transition: width 0.3s;
   height: 100%;
   background-color: currentColor;
 }

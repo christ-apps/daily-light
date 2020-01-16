@@ -1,7 +1,7 @@
 <template>
   <view class="page">
     <view class="header">
-      <open-data class="avatar-icon" type="userAvatarUrl" lang="zh_CN" />
+      <image class="avatar-icon" :src="avatar" />
       <navigator class="check-in" url="check-in/index" hover-class="none">打卡</navigator>
       <navigator class="setting" url="settings" hover-class="none">
         <image class="setting-icon" src="../static/setting.png" />
@@ -16,15 +16,17 @@
         />
         <view class="chart-count">章数：{{totalCount || 0}}</view>
       </view>
-      <canvas
-        class="line-chart"
-        :id="canvasId"
-        :canvas-id="canvasId"
-        :style="canvasStyle"
-        @touchstart="touchStart"
-        @touchmove="touchMove"
-        @touchend="touchEnd"
-      />
+      <view class="chart-canvas">
+        <canvas
+          class="line-chart"
+          :id="canvasId"
+          :canvas-id="canvasId"
+          :style="canvasStyle"
+          @touchstart="touchStart"
+          @touchmove="touchMove"
+          @touchend="touchEnd"
+        />
+      </view>
     </view>
     <view class="bookshelfs">
       <view class="bookshelf" v-for="shelf in books" :key="shelf.shelfname">
@@ -52,19 +54,18 @@ export default {
   },
 
   data() {
-    const sysinfo = uni.getSystemInfoSync();
     return {
       avatar: "",
       weekCount: null,
       books: null,
       view: "weekCount",
       canvasId: "u-canvas",
-      cWidth: sysinfo.windowWidth * 0.96,
-      cHeight: sysinfo.windowWidth * 0.48,
+      cWidth: 0,
+      cHeight: 0,
       // #ifndef MP_ALYPAY
       pixelRatio: 1,
       // #endif
-      // #ifdef MP-ALIPAY
+      // #ifdef MP_ALYPAY
       pixelRatio: 2
       // #endif
     };
@@ -78,9 +79,8 @@ export default {
         width: cWidth * pixelRatio + "px",
         height: cHeight * pixelRatio + "px",
         transform: `scale(${1 / pixelRatio})`,
-        transformOrigin: "top left",
-        marginRight: -cWidth * (pixelRatio - 1) + "px",
-        marginBottom: -cHeight * (pixelRatio - 1) + "px"
+        marginLeft: (-cWidth * (pixelRatio - 1)) / 2 + "px",
+        marginTop: (-cHeight * (pixelRatio - 1)) / 2 + "px"
       });
     },
 
@@ -142,6 +142,7 @@ export default {
           legend: {
             show: false
           },
+          animation: true,
           extra: {
             area: {
               opacity: 0.5,
@@ -174,7 +175,17 @@ export default {
     }
   },
 
-  onReady() {
+  async onReady() {
+    await new Promise(done => {
+      uni
+        .createSelectorQuery()
+        .select(".chart-canvas")
+        .boundingClientRect(result => {
+          this.cWidth = result.width;
+          this.cHeight = result.height;
+        })
+        .exec(done);
+    });
     this.avatar = Mock.Random.image();
     this.weekCount = Array.from(
       {
@@ -282,7 +293,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 50px;
+  min-height: 50px;
   padding: 0 15rpx;
   border-bottom: 1px solid #eee;
 }
@@ -302,17 +313,18 @@ export default {
   border-radius: 8rpx;
 }
 
-.charts {
-  padding: 0 15rpx;
-}
-
 .chart-header {
-  padding: 10rpx 0;
+  padding: 10rpx 15rpx;
   font-size: 50rpx;
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: $uni-color-primary;
+}
+
+.chart-canvas {
+  height: 375rpx;
+  overflow: hidden;
 }
 
 .chart-switch {

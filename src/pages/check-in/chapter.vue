@@ -32,9 +32,11 @@ export default {
     bookname: {
       immediate: true,
       handler(title) {
-        uni.setNavigationBarTitle({
-          title
-        });
+        if (typeof title === "string") {
+          uni.setNavigationBarTitle({
+            title
+          });
+        }
       }
     }
   }
