@@ -1,7 +1,11 @@
 <template>
   <uni-list>
-    <uni-list-item title="今日打卡" @click="add" />
-    <uni-list-item title="打卡记录" />
+    <navigator url="book">
+      <uni-list-item title="今日打卡" />
+    </navigator>
+    <navigator url="history">
+      <uni-list-item title="打卡记录" />
+    </navigator>
   </uni-list>
 </template>
 
@@ -12,14 +16,6 @@ export default {
   components: {
     UniList,
     UniListItem
-  },
-
-  methods: {
-    add() {
-      uni.navigateTo({
-        url: 'book'
-      })
-    }
   }
 };
 </script>

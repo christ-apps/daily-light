@@ -1,11 +1,11 @@
 <template>
   <view class="page">
     <view class="header">
-      <navigator class="header-button" url="group" open-type="reLaunch">
+      <navigator class="header-button" url="group/new">
         <uni-icons type="plusempty" />
         <text>新建</text>
       </navigator>
-      <navigator class="header-button" url="group" open-type="reLaunch">
+      <navigator class="header-button" url="group/messages">
         <text>消息</text>
       </navigator>
     </view>

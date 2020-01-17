@@ -16,6 +16,9 @@
  *     id: Number
  *   },
  *
+ *   // 也可以传字符串数组，接收类型为`String`
+ *   // queryData: ['name'],
+ *
  *   // 在data段中可定义默认值
  *   data() {
  *     return {
@@ -40,15 +43,13 @@ export default {
         if (Array.isArray(config)) {
           for (const prop of config) {
             if (typeof prop === "string") {
-              data[prop] = null;
+              data[prop] = void 0;
             }
           }
         } else if (typeof config === "object" && config !== null) {
-          for (const [prop, value] of Object.entries(config)) {
-            if (typeof value === "function") {
-              data[prop] = getDefaultValue(value);
-            } else {
-              data[prop] = null;
+          for (const prop of Object.keys(config)) {
+            if (typeof prop === "string") {
+              data[prop] = void 0;
             }
           }
         }
@@ -78,26 +79,5 @@ export default {
         }
       }
     });
-  }
-};
-
-const getDefaultValue = type => {
-  if (Array.isArray(type)) {
-    if (type.length === 1) {
-      return getDefaultValue(type[0]);
-    }
-    return null;
-  }
-  switch (type) {
-    case String:
-      return "";
-    case Number:
-      return 0;
-    case Boolean:
-      return false;
-    case Array:
-      return [];
-    default:
-      return null;
   }
 };

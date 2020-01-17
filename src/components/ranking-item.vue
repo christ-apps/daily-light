@@ -3,7 +3,7 @@
     <view class="ranking">{{ranking}}</view>
     <image class="avatar" :src="avatar" />
     <view class="nickname">{{nickname}}</view>
-    <block v-if="star || star === 0">
+    <block v-if="star >= 0">
       <uni-icons :type="star > 0 ? 'star-filled' : 'star'" :size="30" color="#d51e7b" />
       <view class="star">x{{star}}</view>
     </block>

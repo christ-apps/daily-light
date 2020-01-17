@@ -2,27 +2,38 @@
   <view class="page">
     <view class="members">
       <view class="member" v-for="member in members" :key="member.userid">
-        <navigator class="avatar" url="settings" open-type="redirect">
+        <navigator class="avatar" url="/pages/ranking/ranking">
           <image class="avatar" :src="member.avatar" />
         </navigator>
         <view class="nickname">{{member.nickname}}</view>
       </view>
-      <view class="member" v-if="groupid === defaultid">
+      <view class="member" v-if="groupId === defaultid">
         <navigator class="fake-avatar icon-minus" url="settings" open-type="redirect" />
       </view>
       <view class="member">
-        <navigator class="fake-avatar icon-plus" url="settings" open-type="redirect" />
+        <navigator
+          class="fake-avatar icon-plus"
+          :url="`invite?groupId=${groupId}&groupName=${groupName}`"
+        />
       </view>
     </view>
     <uni-list>
       <uni-list-item title="群名称" :note="groupName" :show-arrow="false" />
-      <uni-list-item title="邀请新成员" />
-      <uni-list-item title="我在本群的昵称" :note="nickname" />
+      <navigator :url="`invite?groupId=${groupId}&groupName=${groupName}`">
+        <uni-list-item title="邀请新成员" />
+      </navigator>
+      <navigator
+        :url="`/pages/modal/input?title=修改群昵称&value=${nickname}&label=我在本群的昵称&footer=设置你在群里的昵称，这个昵称只会在这个群内显示&maxlength=20&callback=setNickName`"
+      >
+        <uni-list-item title="我在本群的昵称" :note="nickname" />
+      </navigator>
       <uni-list-item title="排行有效时间区间" :note="`${startDate} ~ ${endDate}`" :show-arrow="false" />
-      <uni-list-item title="查看排行榜" />
+      <navigator :url="`/pages/ranking/ranking?groupId=${groupId}`">
+        <uni-list-item title="查看排行榜" />
+      </navigator>
     </uni-list>
     <button type="warn" style="margin: 15rpx">
-      <block v-if="groupid === defaultid">删除并</block>
+      <block v-if="groupId === defaultid">删除并</block>
       <block>退出</block>
     </button>
   </view>
@@ -44,7 +55,7 @@ export default {
 
   data() {
     return Mock.mock({
-      "members|3-100": [
+      "members|3-20": [
         {
           "userid|+1": 1,
           avatar: "@image(64x64)",
@@ -54,11 +65,18 @@ export default {
       groupName: "@ctitle(1, 10)",
       nickname: "@cname()",
       "admin|1": true,
-      groupid: "@natural(1, 3)",
+      groupId: "@natural(1, 3)",
       defaultid: "@natural(1, 3)",
-      startDate: "@date()",
-      endDate: "@date()"
+      startDate: "@date(yyyy年MM月dd日)",
+      endDate: "@date(yyyy年MM月dd日)"
     });
+  },
+
+  methods: {
+    setNickName(value) {
+      if (!value) throw new Error("没有输入昵称，请重新填写");
+      this.nickname = value;
+    }
   }
 };
 </script>
