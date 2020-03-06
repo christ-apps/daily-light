@@ -13,14 +13,17 @@
         </navigator>
       </view>
     </view>
+    <selected-fab />
   </view>
 </template>
 
 <script>
 import TitleBar from "@/components/title-bar";
+import SelectedFab from "@/components/selected-fab";
 export default {
   components: {
-    TitleBar
+    TitleBar,
+    SelectedFab
   },
 
   data() {

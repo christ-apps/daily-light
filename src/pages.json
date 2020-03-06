@@ -37,6 +37,12 @@
       }
     },
     {
+      "path": "pages/check-in/selected",
+      "style": {
+        "navigationBarTitleText": "待提交记录"
+      }
+    },
+    {
       "path": "pages/check-in/history",
       "style": {
         "navigationBarTitleText": "打卡记录"

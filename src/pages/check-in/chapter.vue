@@ -1,11 +1,23 @@
 <template>
   <view class="chapters">
-    <view class="chapter" v-for="chapter in chapters" :key="chapter.number">{{chapter.number}}</view>
+    <view
+      class="chapter"
+      :class="{ 'chapter__selected': selected[chapter.number] }"
+      v-for="chapter in chapters"
+      :key="chapter.number"
+      @tap="$set(selected, chapter.number, !selected[chapter.number])"
+    >{{chapter.number}}</view>
+    <selected-fab />
   </view>
 </template>
 
 <script>
+import SelectedFab from "@/components/selected-fab";
 export default {
+  components: {
+    SelectedFab
+  },
+
   queryData: {
     bookname: String,
     chapterCount: Number
@@ -13,7 +25,8 @@ export default {
 
   data() {
     return {
-      chapters: null
+      chapters: null,
+      selected: {}
     };
   },
 
@@ -61,5 +74,10 @@ export default {
   text-align: center;
   color: $uni-color-primary;
   background-color: $uni-bg-color;
+}
+
+.chapter__selected {
+  color: $uni-bg-color;
+  background-color: rgba($uni-color-primary, 0.4);
 }
 </style>

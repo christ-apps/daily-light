@@ -2,10 +2,12 @@
   <view class="page">
     <view class="header">
       <image class="avatar-icon" :src="avatar" @tap="previewAvatar" />
-      <navigator class="check-in" url="check-in/check-in" hover-class="none">打卡</navigator>
-      <navigator class="setting" url="settings" hover-class="none">
-        <uni-icons type="gear-filled" :size="30" color="#333333" />
-      </navigator>
+      <block v-if="!userid">
+        <navigator class="check-in" url="check-in/check-in" hover-class="none">打卡</navigator>
+        <navigator class="setting" url="settings" hover-class="none">
+          <uni-icons type="gear-filled" :size="30" color="#333333" />
+        </navigator>
+      </block>
     </view>
     <view class="charts">
       <view class="chart-header">
@@ -55,6 +57,10 @@ export default {
     ProgressBar,
     TitleBar,
     UniIcons
+  },
+
+  queryData: {
+    userid: Number
   },
 
   data() {
