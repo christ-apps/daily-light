@@ -1,9 +1,16 @@
 <template>
-  <navigator class="selected-fab" :style="fabStyle" url="/pages/check-in/selected"></navigator>
+  <navigator class="selected-fab" :style="fabStyle" url="/pages/check-in/selected">{{count}}</navigator>
 </template>
 
 <script>
+import MinBadge from "@/components/min-badge/min-badge";
+import { mapState } from "vuex";
+
 export default {
+  components: {
+    MinBadge
+  },
+
   data() {
     return {
       right: 20,
@@ -12,6 +19,14 @@ export default {
   },
 
   computed: {
+    ...mapState("record", ["records"]),
+
+    count() {
+      return Object.values(this.records)
+        .map(book => book.filter(chapter => chapter).length)
+        .reduce((sum, count) => sum + count, 0);
+    },
+
     fabStyle() {
       return {
         right: this.right + "px",
@@ -30,7 +45,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba($uni-color-primary, 0.4);
+  background-color: rgba($uni-color-primary, 0.5);
   position: fixed;
+  color: #fff;
+  font-size: 26px;
 }
 </style>

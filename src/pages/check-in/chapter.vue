@@ -5,7 +5,7 @@
       :class="{ 'chapter__selected': selected[chapter.number] }"
       v-for="chapter in chapters"
       :key="chapter.number"
-      @tap="$set(selected, chapter.number, !selected[chapter.number])"
+      @tap="setChapter(chapter.number, !selected[chapter.number])"
     >{{chapter.number}}</view>
     <selected-fab />
   </view>
@@ -13,6 +13,7 @@
 
 <script>
 import SelectedFab from "@/components/selected-fab";
+import { mapState, mapMutations } from "vuex";
 export default {
   components: {
     SelectedFab
@@ -25,8 +26,7 @@ export default {
 
   data() {
     return {
-      chapters: null,
-      selected: {}
+      chapters: null
     };
   },
 
@@ -41,6 +41,25 @@ export default {
     );
   },
 
+  computed: {
+    ...mapState("book", ["books"]),
+    ...mapState("record", ["records"]),
+
+    shortname() {
+      for (const shelf of this.books) {
+        for (const book of shelf.books) {
+          if (this.bookname === book.name) {
+            return book.shortname;
+          }
+        }
+      }
+    },
+
+    selected() {
+      return this.records[this.shortname] || [];
+    }
+  },
+
   watch: {
     bookname: {
       immediate: true,
@@ -51,6 +70,20 @@ export default {
           });
         }
       }
+    }
+  },
+
+  methods: {
+    ...mapMutations("record", {
+      setRecord: "SET_RECORD"
+    }),
+
+    setChapter(chapter, selected) {
+      this.setRecord({
+        bookid: this.shortname,
+        chapter,
+        selected
+      });
     }
   }
 };
