@@ -38,7 +38,7 @@
     "mockjs": "^1.1.0",
     "regenerator-runtime": "^0.13.5",
     "vue": "^2.6.10",
-    "vuex": "^3.4.0"
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
     "@dcloudio/uni-cli-shared": "^2.0.0-27920200618002",
