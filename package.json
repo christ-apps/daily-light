@@ -33,7 +33,7 @@
     "@dcloudio/uni-mp-toutiao": "^2.0.0-27920200618002",
     "@dcloudio/uni-mp-weixin": "^2.0.0-27920200618002",
     "@dcloudio/uni-stat": "^2.0.0-27920200618002",
-    "dayjs": "^1.8.28",
+    "dayjs": "^1.8.29",
     "flyio": "^0.6.2",
     "mockjs": "^1.1.0",
     "regenerator-runtime": "^0.13.5",
