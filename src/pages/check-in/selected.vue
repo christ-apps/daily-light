@@ -17,7 +17,7 @@
 <script>
 import UniList from "@/components/uni-list/uni-list";
 import UniListItem from "@/components/uni-list-item/uni-list-item";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   components: {
@@ -33,7 +33,10 @@ export default {
       const records = [];
       for (const shelf of this.books) {
         for (const book of shelf.books) {
-          if (this.records[book.shortname]) {
+          if (
+            this.records[book.shortname] &&
+            this.records[book.shortname].filter(ch => ch).length > 0
+          ) {
             const chapters = [];
             let start = 0;
             for (let chapter = 1; chapter <= book.count; chapter++) {
@@ -71,8 +74,15 @@ export default {
   },
 
   methods: {
+    ...mapMutations("record", {
+      delRecord: "DEL_RECORD"
+    }),
+
     async submit() {
-      const loading = uni.showLoading();
+      const loading = uni.showLoading({
+        title: "正在提交",
+        mask: true
+      });
       const records = [];
       for (const [bookId, chapters] of Object.entries(this.records)) {
         records.push(
@@ -80,13 +90,23 @@ export default {
         );
       }
       try {
-        await wx.cloud.callFunction({
+        const { result } = await wx.cloud.callFunction({
           name: "addRecords",
-          data: { records },
-          complete: res => {
-            console.log(res);
-          }
+          data: { records }
         });
+        result.forEach(record => this.delRecord(record));
+        if (result.length === records.length) {
+          uni.navigateBack();
+          uni.showToast({
+            icon: "success",
+            title: "打卡成功"
+          });
+        } else {
+          uni.showModal({
+            content: '部分记录提交失败',
+            showCancel: false,
+          })
+        }
       } finally {
         uni.hideLoading();
       }

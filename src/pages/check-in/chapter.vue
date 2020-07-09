@@ -74,16 +74,17 @@ export default {
   },
 
   methods: {
-    ...mapMutations("record", {
-      setRecord: "SET_RECORD"
-    }),
+    ...mapMutations("record", [
+      "ADD_RECORD",
+      "DEL_RECORD",
+    ]),
 
     setChapter(chapter, selected) {
-      this.setRecord({
-        bookid: this.shortname,
+      const record = {
+        bookId: this.shortname,
         chapter,
-        selected
-      });
+      }
+      this[selected ? 'ADD_RECORD' : 'DEL_RECORD'](record)
     }
   }
 };

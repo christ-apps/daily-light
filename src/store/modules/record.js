@@ -5,12 +5,18 @@ export const state = () => ({
 });
 
 export const mutations = {
-  SET_RECORD({ records }, record) {
-    const { bookid, chapter, selected } = record;
-    if (!records[bookid]) {
-      Vue.set(records, bookid, []);
+  ADD_RECORD({ records }, record) {
+    const { bookId, chapter } = record;
+    if (!records[bookId]) {
+      Vue.set(records, bookId, []);
     }
-    Vue.set(records[bookid], chapter, selected && chapter);
+    Vue.set(records[bookId], chapter, chapter);
+    uni.setStorageSync("APP_RECORDS", records);
+  },
+
+  DEL_RECORD({ records }, record) {
+    const { bookId, chapter } = record;
+    Vue.set(records[bookId] || [], chapter, 0);
     uni.setStorageSync("APP_RECORDS", records);
   },
 };
