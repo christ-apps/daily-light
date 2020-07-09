@@ -72,12 +72,24 @@ export default {
 
   methods: {
     async submit() {
-      console.log(
-        await uniCloud.callFunction({
+      const loading = uni.showLoading();
+      const records = [];
+      for (const [bookId, chapters] of Object.entries(this.records)) {
+        records.push(
+          ...chapters.filter(ch => ch).map(chapter => ({ bookId, chapter }))
+        );
+      }
+      try {
+        await wx.cloud.callFunction({
           name: "addRecords",
-          data: [{ a: 1 }]
-        })
-      );
+          data: { records },
+          complete: res => {
+            console.log(res);
+          }
+        });
+      } finally {
+        uni.hideLoading();
+      }
     }
   }
 };

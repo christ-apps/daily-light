@@ -4,6 +4,7 @@
 
 <script>
 import MinBadge from "@/components/min-badge/min-badge";
+import calcStyle from "@/util/calc-style";
 import { mapState } from "vuex";
 
 export default {
@@ -28,10 +29,10 @@ export default {
     },
 
     fabStyle() {
-      return {
+      return calcStyle({
         right: this.right + "px",
         bottom: this.bottom + "px"
-      };
+      });
     }
   }
 };
