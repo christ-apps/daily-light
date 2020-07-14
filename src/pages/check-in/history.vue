@@ -48,13 +48,20 @@ export default {
 
   computed: {
     displayDate() {
-      return dayjs(this.date).format("YYYY年MM月");
+      return dayjs(this.date, "YYYY-MM-DD").format("YYYY年MM月");
     }
   },
 
   methods: {
     async fetch() {
-      await new Promise(done => setTimeout(done, 500));
+      const date = dayjs(this.date, "YYYY-MM-DD");
+      const db = wx.cloud.database();
+      const _ = db.command;
+      wx.login
+      const res = await db.collection("records").where({
+        createTime: _.gte(date.startOf("month").toDate()).and(_.lte(date.endOf("month").toDate()))
+      }).get();
+      console.log(res);
       return Mock.mock({
         hasMoreEarlier: true,
         hasMoreLater: false,

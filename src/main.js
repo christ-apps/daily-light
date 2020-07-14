@@ -1,6 +1,7 @@
 import Vue from "vue";
 import App from "./App";
 import queryData from "./plugins/query-data";
+import dayjs from "./plugins/dayjs";
 import store from "./store";
 
 Vue.config.productionTip = false;
