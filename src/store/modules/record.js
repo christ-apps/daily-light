@@ -1,7 +1,7 @@
-import Vue from "vue";
+import Vue from 'vue';
 
 export const state = () => ({
-  records: uni.getStorageSync("APP_RECORDS") || {},
+  records: uni.getStorageSync('APP_RECORDS') || {},
 });
 
 export const mutations = {
@@ -11,12 +11,12 @@ export const mutations = {
       Vue.set(records, bookId, []);
     }
     Vue.set(records[bookId], chapter, chapter);
-    uni.setStorageSync("APP_RECORDS", records);
+    uni.setStorageSync('APP_RECORDS', records);
   },
 
   DEL_RECORD({ records }, record) {
     const { bookId, chapter } = record;
     Vue.set(records[bookId] || [], chapter, 0);
-    uni.setStorageSync("APP_RECORDS", records);
+    uni.setStorageSync('APP_RECORDS', records);
   },
 };

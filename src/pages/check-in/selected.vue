@@ -15,19 +15,19 @@
 </template>
 
 <script>
-import UniList from "@/components/uni-list/uni-list";
-import UniListItem from "@/components/uni-list-item/uni-list-item";
-import { mapState, mapMutations } from "vuex";
+import UniList from '@/components/uni-list/uni-list';
+import UniListItem from '@/components/uni-list-item/uni-list-item';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   components: {
     UniList,
-    UniListItem
+    UniListItem,
   },
 
   computed: {
-    ...mapState("book", ["books"]),
-    ...mapState("record", ["records"]),
+    ...mapState('book', ['books']),
+    ...mapState('record', ['records']),
 
     rawRecords() {
       const records = [];
@@ -64,54 +64,54 @@ export default {
             }
             records.push({
               book: book.name,
-              chapters: chapters.join("，")
+              chapters: chapters.join('，'),
             });
           }
         }
       }
       return records;
-    }
+    },
   },
 
   methods: {
-    ...mapMutations("record", {
-      delRecord: "DEL_RECORD"
+    ...mapMutations('record', {
+      delRecord: 'DEL_RECORD',
     }),
 
     async submit() {
-      const loading = uni.showLoading({
-        title: "正在提交",
-        mask: true
+      uni.showLoading({
+        title: '正在提交',
+        mask: true,
       });
       const records = [];
       for (const [bookId, chapters] of Object.entries(this.records)) {
         records.push(
-          ...chapters.filter(ch => ch).map(chapter => ({ bookId, chapter }))
+          ...chapters.filter(ch => ch).map(chapter => ({ bookId, chapter })),
         );
       }
       try {
         const { result } = await wx.cloud.callFunction({
-          name: "addRecords",
-          data: { records }
+          name: 'addRecords',
+          data: { records },
         });
         result.forEach(record => this.delRecord(record));
         if (result.length === records.length) {
           uni.navigateBack();
           uni.showToast({
-            icon: "success",
-            title: "打卡成功"
+            icon: 'success',
+            title: '打卡成功',
           });
         } else {
           uni.showModal({
             content: '部分记录提交失败',
             showCancel: false,
-          })
+          });
         }
       } finally {
         uni.hideLoading();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -1,8 +1,8 @@
-import Vue from "vue";
-import App from "./App";
-import queryData from "./plugins/query-data";
-import dayjs from "./plugins/dayjs";
-import store from "./store";
+import Vue from 'vue';
+import App from './App';
+import queryData from './plugins/query-data';
+import './plugins/dayjs';
+import store from './store';
 
 Vue.config.productionTip = false;
 
@@ -13,7 +13,7 @@ Vue.use(queryData);
 wx.cloud.init();
 // #endif
 
-App.mpType = "app";
+App.mpType = 'app';
 
 const app = new Vue({
   store,

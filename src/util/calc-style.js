@@ -20,7 +20,7 @@ export default function calcStyle(style) {
   for (const [prop, value] of Object.entries(styleObject)) {
     styleStrArr.push(`${prop}:${value};`);
   }
-  return styleStrArr.join("");
+  return styleStrArr.join('');
 }
 
 /**
@@ -30,9 +30,9 @@ export default function calcStyle(style) {
  */
 const calcStyleObject = style => {
   const styleObject = {};
-  if (typeof style === "string") {
-    for (const item of style.split(";")) {
-      let [prop, value] = item.split(":");
+  if (typeof style === 'string') {
+    for (const item of style.split(';')) {
+      let [prop, value] = item.split(':');
       prop = prop.trim();
       value = value.trim();
       styleObject[prop] = value;
@@ -42,10 +42,10 @@ const calcStyleObject = style => {
   if (Array.isArray(style)) {
     return Object.assign(
       styleObject,
-      ...style.map(item => calcStyleObject(item))
+      ...style.map(item => calcStyleObject(item)),
     );
   }
-  if (typeof style === "object" && style !== null) {
+  if (typeof style === 'object' && style !== null) {
     for (let [prop, value] of Object.entries(style)) {
       prop = prop.replace(/[A-Z]/g, c => `-${c.toLowerCase()}`);
       styleObject[prop] = value;

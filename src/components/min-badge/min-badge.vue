@@ -1,8 +1,8 @@
 <template>
   <view class="min-badge">
     <slot></slot>
-    <view class="min-badge-dot" v-if="dot"></view>
-    <view class="min-badge-count" v-else-if="count">{{finalCount}}</view>
+    <view v-if="dot" class="min-badge-dot"></view>
+    <view v-else-if="count" class="min-badge-count">{{ finalCount }}</view>
   </view>
 </template>
 
@@ -11,23 +11,23 @@ export default {
   props: {
     count: {
       type: Number,
-      default: 0
+      default: 0,
     },
     maxCount: {
       type: Number,
-      default: 99
+      default: 99,
     },
     dot: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
-    finalCount () {
-      return this.count > this.maxCount ? `${this.maxCount}+` : this.count
-    }
-  }
-}
+    finalCount() {
+      return this.count > this.maxCount ? `${this.maxCount}+` : this.count;
+    },
+  },
+};
 </script>
 
 <style scoped>

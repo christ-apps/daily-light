@@ -1,16 +1,16 @@
 <template>
   <view class="page">
-    <view class="bookshelf" v-for="shelf in books" :key="shelf.shelfname">
-      <title-bar>{{shelf.shelfname}}</title-bar>
+    <view v-for="shelf in books" :key="shelf.shelfname" class="bookshelf">
+      <title-bar>{{ shelf.shelfname }}</title-bar>
       <view class="books">
         <navigator
-          class="book"
           v-for="book in shelf.books"
           :key="book.shortname"
+          class="book"
           :url="`chapter?bookname=${book.name}&chapterCount=${book.count}`"
         >
           <min-badge class="badge" :count="count(book)">
-            <view class="short-name">{{book.shortname}}</view>
+            <view class="short-name">{{ book.shortname }}</view>
           </min-badge>
         </navigator>
       </view>
@@ -20,29 +20,29 @@
 </template>
 
 <script>
-import TitleBar from "@/components/title-bar";
-import MinBadge from "@/components/min-badge/min-badge";
-import SelectedFab from "@/components/selected-fab";
-import { mapState, mapGetters } from "vuex";
+import TitleBar from '@/components/title-bar';
+import MinBadge from '@/components/min-badge/min-badge';
+import SelectedFab from '@/components/selected-fab';
+import { mapState } from 'vuex';
 
 export default {
   components: {
     TitleBar,
     MinBadge,
-    SelectedFab
+    SelectedFab,
   },
 
   computed: {
-    ...mapState("book", ["books"]),
-    ...mapState("record", ["records"])
+    ...mapState('book', ['books']),
+    ...mapState('record', ['records']),
   },
 
   methods: {
     count(book) {
       return (this.records[book.shortname] || []).filter(chapter => chapter)
         .length;
-    }
-  }
+    },
+  },
 };
 </script>
 

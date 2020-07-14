@@ -3,7 +3,9 @@
     <view class="header">
       <image class="avatar-icon" :src="avatar" @tap="previewAvatar" />
       <block v-if="!userid">
-        <navigator class="check-in" url="check-in/check-in" hover-class="none">打卡</navigator>
+        <navigator class="check-in" url="check-in/check-in" hover-class="none"
+          >打卡</navigator
+        >
         <navigator class="setting" url="settings" hover-class="none">
           <uni-icons type="gear-filled" :size="30" color="#333333" />
         </navigator>
@@ -16,12 +18,12 @@
           :class="{ 'chart-switch__on': view !== 'weekCount' }"
           @tap="switchView"
         />
-        <view class="chart-count">章数：{{totalCount || 0}}</view>
+        <view class="chart-count">章数：{{ totalCount || 0 }}</view>
       </view>
       <view class="chart-canvas">
         <canvas
-          class="line-chart"
           :id="canvasId"
+          class="line-chart"
           :canvas-id="canvasId"
           :style="canvasStyle"
           @touchstart="touchStart"
@@ -31,13 +33,13 @@
       </view>
     </view>
     <view class="bookshelfs">
-      <view class="bookshelf" v-for="shelf in books" :key="shelf.shelfname">
-        <title-bar>{{shelf.shelfname}}</title-bar>
+      <view v-for="shelf in books" :key="shelf.shelfname" class="bookshelf">
+        <title-bar>{{ shelf.shelfname }}</title-bar>
         <view class="books">
-          <view class="book" v-for="book in shelf.books" :key="book.bookname">
-            <view class="short-name">{{book.bookname}}</view>
+          <view v-for="book in shelf.books" :key="book.bookname" class="book">
+            <view class="short-name">{{ book.bookname }}</view>
             <progress-bar class="book-rate" :rate="book.rate" />
-            <view class="book-count">{{book.count}}</view>
+            <view class="book-count">{{ book.count }}</view>
           </view>
         </view>
       </view>
@@ -46,37 +48,38 @@
 </template>
 
 <script>
-import ProgressBar from "@/components/progress-bar";
-import TitleBar from "@/components/title-bar";
-import UniIcons from "@/components/uni-icons/uni-icons";
-import calcStyle from "@/util/calc-style.js";
-import uCharts from "@/u-charts/u-charts.js";
-import Mock from "mockjs";
+import ProgressBar from '@/components/progress-bar';
+import TitleBar from '@/components/title-bar';
+import UniIcons from '@/components/uni-icons/uni-icons';
+import calcStyle from '@/util/calc-style.js';
+import uCharts from '@/u-charts/u-charts.js';
+import Mock from 'mockjs';
 export default {
   components: {
     ProgressBar,
     TitleBar,
-    UniIcons
+    UniIcons,
   },
 
   queryData: {
-    userid: Number
+    userid: Number,
   },
 
   data() {
     return {
-      avatar: "",
+      avatar: '',
       weekCount: null,
       books: null,
-      view: "weekCount",
-      canvasId: "u-canvas",
+      view: 'weekCount',
+      canvasId: 'u-canvas',
       cWidth: 0,
       cHeight: 0,
       // #ifndef MP_ALYPAY
       pixelRatio: 1,
       // #endif
       // #ifdef MP_ALYPAY
-      pixelRatio: 2
+      // eslint-disable-next-line no-dupe-keys, vue/no-dupe-keys
+      pixelRatio: 2,
       // #endif
     };
   },
@@ -86,11 +89,11 @@ export default {
       const { cWidth, cHeight, pixelRatio } = this;
       return calcStyle({
         pixelRatio,
-        width: cWidth * pixelRatio + "px",
-        height: cHeight * pixelRatio + "px",
+        width: cWidth * pixelRatio + 'px',
+        height: cHeight * pixelRatio + 'px',
         transform: `scale(${1 / pixelRatio})`,
-        marginLeft: (-cWidth * (pixelRatio - 1)) / 2 + "px",
-        marginTop: (-cHeight * (pixelRatio - 1)) / 2 + "px"
+        marginLeft: (-cWidth * (pixelRatio - 1)) / 2 + 'px',
+        marginTop: (-cHeight * (pixelRatio - 1)) / 2 + 'px',
       });
     },
 
@@ -113,7 +116,7 @@ export default {
         return this.weekCount.map(count => (total += count));
       }
       return null;
-    }
+    },
   },
 
   methods: {
@@ -126,39 +129,39 @@ export default {
           width: this.cWidth * this.pixelRatio,
           height: this.cHeight * this.pixelRatio,
           padding: [4, 0, 4, 0],
-          type: "area",
+          type: 'area',
           pixelRatio: this.pixelRatio,
           enableScroll: true,
           dataLabel: false,
           categories: count.map((_, i) => i + 1),
           series: [
             {
-              name: "章数",
+              name: '章数',
               data: count,
-              color: "#d51e7b"
-            }
+              color: '#d51e7b',
+            },
           ],
           xAxis: {
-            scrollAlign: "right",
+            scrollAlign: 'right',
             disableGrid: true,
-            itemCount: 7
+            itemCount: 7,
           },
           yAxis: {
             disabled: true,
-            gridType: "dash",
+            gridType: 'dash',
             splitNumber: 3,
-            dashLength: 2
+            dashLength: 2,
           },
           legend: {
-            show: false
+            show: false,
           },
           animation: true,
           extra: {
             area: {
               opacity: 0.5,
-              gradient: true
-            }
-          }
+              gradient: true,
+            },
+          },
         });
       }
     },
@@ -176,10 +179,10 @@ export default {
     },
 
     switchView() {
-      if (this.view === "weekCount") {
-        this.view = "weeklyTotalCount";
+      if (this.view === 'weekCount') {
+        this.view = 'weeklyTotalCount';
       } else {
-        this.view = "weekCount";
+        this.view = 'weekCount';
       }
       this.flushCanvas();
     },
@@ -187,16 +190,16 @@ export default {
     previewAvatar() {
       uni.previewImage({
         current: 0,
-        urls: [this.avatar]
+        urls: [this.avatar],
       });
-    }
+    },
   },
 
   async onReady() {
     await new Promise(done => {
       uni
         .createSelectorQuery()
-        .select(".chart-canvas")
+        .select('.chart-canvas')
         .boundingClientRect(result => {
           this.cWidth = result.width;
           this.cHeight = result.height;
@@ -206,102 +209,102 @@ export default {
     this.avatar = Mock.Random.image();
     this.weekCount = Array.from(
       {
-        length: Mock.mock("@natural(1, 100)")
+        length: Mock.mock('@natural(1, 100)'),
       },
-      () => Mock.mock("@natural(0, 100)")
+      () => Mock.mock('@natural(0, 100)'),
     );
     this.flushCanvas();
     this.books = [
       {
-        shelfname: "旧约",
+        shelfname: '旧约',
         books: [
-          "创",
-          "出",
-          "利",
-          "民",
-          "申",
-          "书",
-          "士",
-          "得",
-          "撒上",
-          "撒下",
-          "王上",
-          "王下",
-          "代上",
-          "代下",
-          "拉",
-          "尼",
-          "斯",
-          "伯",
-          "诗",
-          "箴",
-          "传",
-          "歌",
-          "赛",
-          "耶",
-          "哀",
-          "结",
-          "但",
-          "何",
-          "珥",
-          "摩",
-          "俄",
-          "拿",
-          "弥",
-          "鸿",
-          "哈",
-          "番",
-          "该",
-          "亚",
-          "玛"
+          '创',
+          '出',
+          '利',
+          '民',
+          '申',
+          '书',
+          '士',
+          '得',
+          '撒上',
+          '撒下',
+          '王上',
+          '王下',
+          '代上',
+          '代下',
+          '拉',
+          '尼',
+          '斯',
+          '伯',
+          '诗',
+          '箴',
+          '传',
+          '歌',
+          '赛',
+          '耶',
+          '哀',
+          '结',
+          '但',
+          '何',
+          '珥',
+          '摩',
+          '俄',
+          '拿',
+          '弥',
+          '鸿',
+          '哈',
+          '番',
+          '该',
+          '亚',
+          '玛',
         ].map(name =>
           Mock.mock({
-            bookname: () => name,
-            "rate|0.2": 1,
-            "count|0-5": 1
-          })
-        )
+            'bookname': () => name,
+            'rate|0.2': 1,
+            'count|0-5': 1,
+          }),
+        ),
       },
       {
-        shelfname: "新约",
+        shelfname: '新约',
         books: [
-          "太",
-          "可",
-          "路",
-          "约",
-          "徒",
-          "罗",
-          "林前",
-          "林后",
-          "加",
-          "弗",
-          "腓",
-          "西",
-          "帖前",
-          "帖后",
-          "提前",
-          "提后",
-          "多",
-          "门",
-          "来",
-          "雅",
-          "彼前",
-          "彼后",
-          "约一",
-          "约二",
-          "约三",
-          "犹",
-          "启"
+          '太',
+          '可',
+          '路',
+          '约',
+          '徒',
+          '罗',
+          '林前',
+          '林后',
+          '加',
+          '弗',
+          '腓',
+          '西',
+          '帖前',
+          '帖后',
+          '提前',
+          '提后',
+          '多',
+          '门',
+          '来',
+          '雅',
+          '彼前',
+          '彼后',
+          '约一',
+          '约二',
+          '约三',
+          '犹',
+          '启',
         ].map(name =>
           Mock.mock({
-            bookname: () => name,
-            "rate|0.2": 1,
-            "count|0-5": 1
-          })
-        )
-      }
+            'bookname': () => name,
+            'rate|0.2': 1,
+            'count|0-5': 1,
+          }),
+        ),
+      },
     ];
-  }
+  },
 };
 </script>
 
@@ -355,13 +358,13 @@ export default {
 }
 
 .chart-switch::before {
-  content: "总周";
+  content: '总周';
   letter-spacing: 0.5em;
   margin-right: -0.5em;
 }
 
 .chart-switch::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;

@@ -1,14 +1,18 @@
 <template>
   <view class="page">
     <view class="members">
-      <view class="member" v-for="member in members" :key="member.userid">
+      <view v-for="member in members" :key="member.userid" class="member">
         <navigator class="avatar" url="/pages/ranking/ranking">
           <image class="avatar" :src="member.avatar" />
         </navigator>
-        <view class="nickname">{{member.nickname}}</view>
+        <view class="nickname">{{ member.nickname }}</view>
       </view>
-      <view class="member" v-if="groupId === defaultid">
-        <navigator class="fake-avatar icon-minus" url="settings" open-type="redirect" />
+      <view v-if="groupId === defaultid" class="member">
+        <navigator
+          class="fake-avatar icon-minus"
+          url="settings"
+          open-type="redirect"
+        />
       </view>
       <view class="member">
         <navigator
@@ -23,11 +27,17 @@
         <uni-list-item title="邀请新成员" />
       </navigator>
       <navigator
-        :url="`/pages/modal/input?title=修改群昵称&value=${nickname}&label=我在本群的昵称&footer=设置你在群里的昵称，这个昵称只会在这个群内显示&maxlength=20&callback=setNickName`"
+        :url="
+          `/pages/modal/input?title=修改群昵称&value=${nickname}&label=我在本群的昵称&footer=设置你在群里的昵称，这个昵称只会在这个群内显示&maxlength=20&callback=setNickName`
+        "
       >
         <uni-list-item title="我在本群的昵称" :note="nickname" />
       </navigator>
-      <uni-list-item title="排行有效时间区间" :note="`${startDate} ~ ${endDate}`" :show-arrow="false" />
+      <uni-list-item
+        title="排行有效时间区间"
+        :note="`${startDate} ~ ${endDate}`"
+        :show-arrow="false"
+      />
       <navigator :url="`/pages/ranking/ranking?groupId=${groupId}`">
         <uni-list-item title="查看排行榜" />
       </navigator>
@@ -40,44 +50,44 @@
 </template>
 
 <script>
-import UniList from "@/components/uni-list/uni-list";
-import UniListItem from "@/components/uni-list-item/uni-list-item";
-import Mock from "mockjs";
+import UniList from '@/components/uni-list/uni-list';
+import UniListItem from '@/components/uni-list-item/uni-list-item';
+import Mock from 'mockjs';
 export default {
   components: {
     UniList,
-    UniListItem
+    UniListItem,
   },
 
   queryData: {
-    groupName: String
+    groupName: String,
   },
 
   data() {
     return Mock.mock({
-      "members|3-20": [
+      'members|3-20': [
         {
-          "userid|+1": 1,
-          avatar: "@image(64x64)",
-          nickname: "@ctitle(1, 10)"
-        }
+          'userid|+1': 1,
+          'avatar': '@image(64x64)',
+          'nickname': '@ctitle(1, 10)',
+        },
       ],
-      groupName: "@ctitle(1, 10)",
-      nickname: "@cname()",
-      "admin|1": true,
-      groupId: "@natural(1, 3)",
-      defaultid: "@natural(1, 3)",
-      startDate: "@date(yyyy年MM月dd日)",
-      endDate: "@date(yyyy年MM月dd日)"
+      'groupName': '@ctitle(1, 10)',
+      'nickname': '@cname()',
+      'admin|1': true,
+      'groupId': '@natural(1, 3)',
+      'defaultid': '@natural(1, 3)',
+      'startDate': '@date(yyyy年MM月dd日)',
+      'endDate': '@date(yyyy年MM月dd日)',
     });
   },
 
   methods: {
     setNickName(value) {
-      if (!value) throw new Error("没有输入昵称，请重新填写");
+      if (!value) throw new Error('没有输入昵称，请重新填写');
       this.nickname = value;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -125,7 +135,7 @@ export default {
 
 .icon-minus::after,
 .icon-plus::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 48%;
   right: 30%;
@@ -135,7 +145,7 @@ export default {
 }
 
 .icon-plus::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 30%;
   bottom: 30%;

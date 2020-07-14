@@ -15,7 +15,11 @@
         :value="notifyTime"
         @change="notifyTime = $event.detail.value"
       >
-        <uni-list-item title="提醒时间" :note="notifyTime" :disabled="!notify" />
+        <uni-list-item
+          title="提醒时间"
+          :note="notifyTime"
+          :disabled="!notify"
+        />
       </picker>
     </uni-list>
     <!-- #ifdef APP-PLUS || MP-WEIXIN || MP-QQ || MP-BAIDU -->
@@ -37,30 +41,30 @@
 </template>
 
 <script>
-import TitleBar from "@/components/title-bar";
-import UniList from "@/components/uni-list/uni-list";
-import UniListItem from "@/components/uni-list-item/uni-list-item";
-import calcStyle from "@/util/calc-style";
+import TitleBar from '@/components/title-bar';
+import UniList from '@/components/uni-list/uni-list';
+import UniListItem from '@/components/uni-list-item/uni-list-item';
+import calcStyle from '@/util/calc-style';
 export default {
   components: {
     TitleBar,
     UniList,
-    UniListItem
+    UniListItem,
   },
 
   data() {
     return {
       notify: false,
-      notifyTime: "20:30",
+      notifyTime: '20:30',
       buttonStyle: calcStyle({
-        position: "absolute",
+        position: 'absolute',
         top: 0,
         right: 0,
-        width: "750rpx",
-        height: "100%",
-        opacity: 0
-      })
+        width: '750rpx',
+        height: '100%',
+        opacity: 0,
+      }),
     };
-  }
+  },
 };
 </script>

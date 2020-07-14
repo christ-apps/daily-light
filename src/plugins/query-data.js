@@ -35,20 +35,20 @@
  */
 export default {
   install(Vue, options) {
-    const dataKey = (options && options.dataKey) || "queryData";
+    const dataKey = (options && options.dataKey) || 'queryData';
     Vue.mixin({
       data() {
         const data = {};
         const config = this.$options[dataKey];
         if (Array.isArray(config)) {
           for (const prop of config) {
-            if (typeof prop === "string") {
+            if (typeof prop === 'string') {
               data[prop] = void 0;
             }
           }
-        } else if (typeof config === "object" && config !== null) {
+        } else if (typeof config === 'object' && config !== null) {
           for (const prop of Object.keys(config)) {
-            if (typeof prop === "string") {
+            if (typeof prop === 'string') {
               data[prop] = void 0;
             }
           }
@@ -60,13 +60,13 @@ export default {
         const config = this.$options[dataKey];
         if (Array.isArray(config)) {
           for (const prop of config) {
-            if (typeof prop === "string" && typeof option[prop] === "string") {
+            if (typeof prop === 'string' && typeof option[prop] === 'string') {
               this[prop] = option[prop];
             }
           }
-        } else if (typeof config === "object" && config !== null) {
+        } else if (typeof config === 'object' && config !== null) {
           for (const [prop, type] of Object.entries(config)) {
-            if (typeof option[prop] !== "string") continue;
+            if (typeof option[prop] !== 'string') continue;
             switch (type) {
               case Number:
                 this[prop] = Number(option[prop]);
@@ -77,7 +77,7 @@ export default {
             }
           }
         }
-      }
+      },
     });
-  }
+  },
 };

@@ -1,49 +1,50 @@
 <template>
   <view class="chapters">
     <view
-      class="chapter"
-      :class="{ 'chapter__selected': selected[chapter.number] }"
       v-for="chapter in chapters"
       :key="chapter.number"
+      class="chapter"
+      :class="{ chapter__selected: selected[chapter.number] }"
       @tap="setChapter(chapter.number, !selected[chapter.number])"
-    >{{chapter.number}}</view>
+      >{{ chapter.number }}</view
+    >
     <selected-fab />
   </view>
 </template>
 
 <script>
-import SelectedFab from "@/components/selected-fab";
-import { mapState, mapMutations } from "vuex";
+import SelectedFab from '@/components/selected-fab';
+import { mapState, mapMutations } from 'vuex';
 export default {
   components: {
-    SelectedFab
+    SelectedFab,
   },
 
   queryData: {
     bookname: String,
-    chapterCount: Number
+    chapterCount: Number,
   },
 
   data() {
     return {
-      chapters: null
+      chapters: null,
     };
   },
 
   onLoad() {
     this.chapters = Array.from(
       {
-        length: this.chapterCount
+        length: this.chapterCount,
       },
       (_, index) => ({
-        number: index + 1
-      })
+        number: index + 1,
+      }),
     );
   },
 
   computed: {
-    ...mapState("book", ["books"]),
-    ...mapState("record", ["records"]),
+    ...mapState('book', ['books']),
+    ...mapState('record', ['records']),
 
     shortname() {
       for (const shelf of this.books) {
@@ -53,40 +54,38 @@ export default {
           }
         }
       }
+      throw new Error('Book not found');
     },
 
     selected() {
       return this.records[this.shortname] || [];
-    }
+    },
   },
 
   watch: {
     bookname: {
       immediate: true,
       handler(title) {
-        if (typeof title === "string") {
+        if (typeof title === 'string') {
           uni.setNavigationBarTitle({
-            title
+            title,
           });
         }
-      }
-    }
+      },
+    },
   },
 
   methods: {
-    ...mapMutations("record", [
-      "ADD_RECORD",
-      "DEL_RECORD",
-    ]),
+    ...mapMutations('record', ['ADD_RECORD', 'DEL_RECORD']),
 
     setChapter(chapter, selected) {
       const record = {
         bookId: this.shortname,
         chapter,
-      }
-      this[selected ? 'ADD_RECORD' : 'DEL_RECORD'](record)
-    }
-  }
+      };
+      this[selected ? 'ADD_RECORD' : 'DEL_RECORD'](record);
+    },
+  },
 };
 </script>
 

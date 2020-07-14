@@ -1,21 +1,25 @@
 <template>
   <view class="ranking-item">
-    <view class="ranking">{{ranking}}</view>
+    <view class="ranking">{{ ranking }}</view>
     <image class="avatar" :src="avatar" />
-    <view class="nickname">{{nickname}}</view>
+    <view class="nickname">{{ nickname }}</view>
     <block v-if="star >= 0">
-      <uni-icons :type="star > 0 ? 'star-filled' : 'star'" :size="30" color="#d51e7b" />
-      <view class="star">x{{star}}</view>
+      <uni-icons
+        :type="star > 0 ? 'star-filled' : 'star'"
+        :size="30"
+        color="#d51e7b"
+      />
+      <view class="star">x{{ star }}</view>
     </block>
-    <view class="score">{{score}}</view>
+    <view class="score">{{ score }}</view>
   </view>
 </template>
 
 <script>
-import UniIcons from "@/components/uni-icons/uni-icons";
+import UniIcons from '@/components/uni-icons/uni-icons';
 export default {
   components: {
-    UniIcons
+    UniIcons,
   },
 
   props: {
@@ -23,8 +27,8 @@ export default {
     avatar: String,
     nickname: String,
     star: Number,
-    score: Number
-  }
+    score: Number,
+  },
 };
 </script>
 

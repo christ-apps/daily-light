@@ -2,11 +2,11 @@
   <view class="page">
     <view class="content-area">
       <scroll-view class="content-scroller" scroll-y>
-        <view class="label" v-if="label">{{label}}</view>
+        <view v-if="label" class="label">{{ label }}</view>
         <input
+          v-model="value"
           class="input"
           :class="{ focus }"
-          v-model="value"
           :maxlength="maxlength"
           :focus="focus"
           @focus="focus = true"
@@ -14,10 +14,10 @@
           @confirm="confirm"
         />
         <view class="footer">
-          <view class="footer-text">{{footer}}</view>
+          <view class="footer-text">{{ footer }}</view>
           <view class="footer-counter">
-            <block>{{value.length}}</block>
-            <block v-if="maxlength >= 0">/{{maxlength}}</block>
+            <block>{{ value.length }}</block>
+            <block v-if="maxlength >= 0">/{{ maxlength }}</block>
           </view>
         </view>
       </scroll-view>
@@ -36,14 +36,24 @@ export default {
     label: String,
     value: String,
     footer: String,
-    maxlength: Number
+    maxlength: Number,
   },
 
   data() {
     return {
       maxlength: -1,
-      focus: true
+      focus: true,
     };
+  },
+
+  watch: {
+    title(value) {
+      if (typeof value === 'string') {
+        uni.setNavigationBarTitle({
+          title: value,
+        });
+      }
+    },
   },
 
   methods: {
@@ -51,25 +61,26 @@ export default {
       if (getCurrentPages().length > 1) {
         const parent = getCurrentPages().slice(-2)[0].$vm;
         if (
-          typeof this.callback === "string" &&
-          typeof parent[this.callback] === "function"
+          typeof this.callback === 'string' &&
+          typeof parent[this.callback] === 'function'
         ) {
           try {
             uni.showLoading({
-              mask: true
+              mask: true,
             });
             await parent[this.callback](this.value);
             uni.hideLoading();
           } catch (err) {
             uni.hideLoading();
             if (err instanceof Error) {
+              // eslint-disable-next-line no-ex-assign
               err = err.message;
             }
-            if (typeof err === "string") {
+            if (typeof err === 'string') {
               uni.showModal({
-                title: "提示",
+                title: '提示',
                 content: err,
-                showCancel: false
+                showCancel: false,
               });
             }
             return;
@@ -77,18 +88,8 @@ export default {
         }
         uni.navigateBack();
       }
-    }
+    },
   },
-
-  watch: {
-    title(value) {
-      if (typeof value === "string") {
-        uni.setNavigationBarTitle({
-          title: value
-        });
-      }
-    }
-  }
 };
 </script>
 

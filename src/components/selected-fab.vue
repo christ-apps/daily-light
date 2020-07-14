@@ -1,26 +1,26 @@
 <template>
-  <navigator class="selected-fab" :style="fabStyle" url="/pages/check-in/selected">{{count}}</navigator>
+  <navigator
+    class="selected-fab"
+    :style="fabStyle"
+    url="/pages/check-in/selected"
+    >{{ count }}</navigator
+  >
 </template>
 
 <script>
-import MinBadge from "@/components/min-badge/min-badge";
-import calcStyle from "@/util/calc-style";
-import { mapState } from "vuex";
+import calcStyle from '@/util/calc-style';
+import { mapState } from 'vuex';
 
 export default {
-  components: {
-    MinBadge
-  },
-
   data() {
     return {
       right: 20,
-      bottom: 20
+      bottom: 20,
     };
   },
 
   computed: {
-    ...mapState("record", ["records"]),
+    ...mapState('record', ['records']),
 
     count() {
       return Object.values(this.records)
@@ -30,11 +30,11 @@ export default {
 
     fabStyle() {
       return calcStyle({
-        right: this.right + "px",
-        bottom: this.bottom + "px"
+        right: this.right + 'px',
+        bottom: this.bottom + 'px',
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

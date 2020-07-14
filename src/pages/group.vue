@@ -11,41 +11,50 @@
     </view>
     <view class="group-list">
       <navigator
-        class="group-item"
-        :url="`group/settings?groupName=${group.name}`"
         v-for="group in groups"
         :key="group.groupid"
+        class="group-item"
+        :url="`group/settings?groupName=${group.name}`"
       >
-        <text class="group-name">{{group.name}}</text>
-        <image class="icon" v-if="group.groupid === defaultid" src="../static/ranking-color.png" />
-        <uni-icons type="star-filled" v-if="group.admin" color="#d51e7b" :size="30" />
+        <text class="group-name">{{ group.name }}</text>
+        <image
+          v-if="group.groupid === defaultid"
+          class="icon"
+          src="../static/ranking-color.png"
+        />
+        <uni-icons
+          v-if="group.admin"
+          type="star-filled"
+          color="#d51e7b"
+          :size="30"
+        />
       </navigator>
     </view>
   </view>
 </template>
 
 <script>
-import UniIcons from "@/components/uni-icons/uni-icons";
-import Mock from "mockjs";
+import UniIcons from '@/components/uni-icons/uni-icons';
+import Mock from 'mockjs';
 export default {
   components: {
-    UniIcons
+    UniIcons,
   },
 
   data() {
     return {
       defaultid: 0,
       groups: Array.from({
-        length: Mock.Random.natural(1, 3)
+        length: Mock.Random.natural(1, 3),
       }).map((_, index) =>
         Mock.mock({
-          groupid: index,
-          name: "@ctitle(1, 10)",
-          "admin|1": true
-        })
-      )
+          'groupid': index,
+          'name': '@ctitle(1, 10)',
+          'admin|1': true,
+        }),
+      ),
     };
-  }
+  },
 };
 </script>
 

@@ -3,8 +3,18 @@
     <view class="header">
       <image class="cover" :src="cover" />
       <view class="tabs">
-        <view class="tab" :class="{ 'tab__selected': type === 'total' }" @tap="type = 'total'">总排行</view>
-        <view class="tab" :class="{ 'tab__selected': type === 'week' }" @tap="type = 'week'">周排行</view>
+        <view
+          class="tab"
+          :class="{ tab__selected: type === 'total' }"
+          @tap="type = 'total'"
+          >总排行</view
+        >
+        <view
+          class="tab"
+          :class="{ tab__selected: type === 'week' }"
+          @tap="type = 'week'"
+          >周排行</view
+        >
       </view>
     </view>
     <ranking-item
@@ -16,10 +26,10 @@
     />
     <view class="ranking-list">
       <navigator
-        :url="`/pages/home/home?userid=${user.userid}`"
-        class="ranking-item--container"
         v-for="(user, index) in usersRanking"
         :key="user.userid"
+        :url="`/pages/home/home?userid=${user.userid}`"
+        class="ranking-item--container"
       >
         <ranking-item
           :ranking="index + 1"
@@ -34,32 +44,32 @@
 </template>
 
 <script>
-import RankingItem from "@/components/ranking-item";
-import Mock from "mockjs";
+import RankingItem from '@/components/ranking-item';
+import Mock from 'mockjs';
 export default {
   components: {
-    RankingItem
+    RankingItem,
   },
 
   data() {
     return {
       // 排行榜类型：week/total
-      type: "total",
+      type: 'total',
       // 封面图片地址
-      cover: Mock.Random.image("700x375"),
+      cover: Mock.Random.image('700x375'),
       // 用户排行记录
       ranking: Array.from({
-        length: Mock.mock("@natural(1, 200)")
+        length: Mock.mock('@natural(1, 200)'),
       }).map((_, index) =>
         Mock.mock({
           userid: index,
-          avatar: "@image()",
-          nickname: "@cname()",
-          count: "@natural(0, 5)",
-          weekCount: "@natural(0, 20)",
-          totalCount: "@natural(20, 9999)"
-        })
-      )
+          avatar: '@image()',
+          nickname: '@cname()',
+          count: '@natural(0, 5)',
+          weekCount: '@natural(0, 20)',
+          totalCount: '@natural(20, 9999)',
+        }),
+      ),
     };
   },
 
@@ -93,10 +103,10 @@ export default {
       return {
         weekRanking,
         totalRanking,
-        ...userRanking
+        ...userRanking,
       };
-    }
-  }
+    },
+  },
 };
 </script>
 
