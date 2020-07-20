@@ -54,7 +54,7 @@ export default {
           }
         }
       }
-      throw new Error('Book not found');
+      return null;
     },
 
     selected() {
@@ -79,6 +79,7 @@ export default {
     ...mapMutations('record', ['ADD_RECORD', 'DEL_RECORD']),
 
     setChapter(chapter, selected) {
+      if (!this.shortname) return;
       const record = {
         bookId: this.shortname,
         chapter,

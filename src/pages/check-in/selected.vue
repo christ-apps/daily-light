@@ -1,26 +1,31 @@
 <template>
-  <view class="page">
-    <uni-list>
-      <uni-list-item
-        v-for="record in rawRecords"
-        :key="record.book"
-        :title="`${record.book} ${record.chapters}`"
-        :show-arrow="false"
-      />
-    </uni-list>
+  <loading-view class="page" :loading-method="checkEmpty">
+    <scroll-view class="page-body" scroll-y>
+      <uni-list>
+        <uni-list-item
+          v-for="record in rawRecords"
+          :key="record.book"
+          :title="`${record.book} ${record.chapters}`"
+          :show-arrow="false"
+        />
+      </uni-list>
+    </scroll-view>
     <div class="page-footer">
       <button type="primary" @tap="submit">提交</button>
     </div>
-  </view>
+  </loading-view>
 </template>
 
 <script>
+import LoadingView from '@/components/loading-view';
 import UniList from '@/components/uni-list/uni-list';
 import UniListItem from '@/components/uni-list-item/uni-list-item';
 import { mapState, mapMutations } from 'vuex';
+import { EmptyHint } from '@/util/errors';
 
 export default {
   components: {
+    LoadingView,
     UniList,
     UniListItem,
   },
@@ -78,6 +83,12 @@ export default {
       delRecord: 'DEL_RECORD',
     }),
 
+    checkEmpty() {
+      if (this.rawRecords.length === 0) {
+        throw new EmptyHint('没有待提交的打卡记录');
+      }
+    },
+
     async submit() {
       uni.showLoading({
         title: '正在提交',
@@ -116,7 +127,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.page-footer {
-  padding: 15rpx;
+.page {
+  &,
+  &::v-deep > .loading-view {
+    min-height: calc(100vh - var(--window-top));
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-body {
+    flex: 1;
+  }
+
+  &-footer {
+    padding: 15rpx;
+  }
 }
 </style>
