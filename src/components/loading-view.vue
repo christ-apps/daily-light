@@ -37,6 +37,10 @@ export default {
   },
 
   computed: {
+    loadResult() {
+      return this.load();
+    },
+
     errmsg() {
       if (this.error instanceof EmptyHint) {
         return this.error.message || '暂无数据';
@@ -59,9 +63,9 @@ export default {
   },
 
   watch: {
-    loadingMethod: {
+    loadResult: {
       immediate: true,
-      handler: 'load',
+      handler() {},
     },
 
     status: {
