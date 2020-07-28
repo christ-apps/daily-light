@@ -127,7 +127,7 @@ export default {
           canvasId: this.canvasId,
           width: this.cWidth * this.pixelRatio,
           height: this.cHeight * this.pixelRatio,
-          padding: [4, 0, 4, 0],
+          padding: [15, 0, 4, 0],
           type: 'area',
           pixelRatio: this.pixelRatio,
           enableScroll: true,
@@ -146,10 +146,12 @@ export default {
             itemCount: 7,
           },
           yAxis: {
-            disabled: true,
+            // disabled: true,
+            format: val => val.toFixed(),
             gridType: 'dash',
             splitNumber: 3,
             dashLength: 2,
+            min: 0,
           },
           legend: {
             show: false,
@@ -195,23 +197,31 @@ export default {
   },
 
   async onReady() {
-    await new Promise(done => {
-      uni
-        .createSelectorQuery()
-        .select('.chart-canvas')
-        .boundingClientRect(result => {
-          this.cWidth = result.width;
-          this.cHeight = result.height;
-        })
-        .exec(done);
-    });
+    const [{ result: weekCount }] = await Promise.all([
+      await wx.cloud.callFunction({
+        name: 'getWeekCount',
+        data: {
+          timezoneOffset: new Date().getTimezoneOffset(),
+        },
+      }),
+      new Promise(done => {
+        uni
+          .createSelectorQuery()
+          .select('.chart-canvas')
+          .boundingClientRect(result => {
+            this.cWidth = result.width;
+            this.cHeight = result.height;
+          })
+          .exec(done);
+      }),
+    ]);
     this.avatar = Mock.Random.image();
-    this.weekCount = Array.from(
-      {
-        length: Mock.mock('@natural(1, 100)'),
-      },
-      () => Mock.mock('@natural(0, 100)'),
-    );
+    const minWeek = Math.min(...weekCount.map(item => item.week));
+    this.weekCount = [];
+    for (const item of weekCount) {
+      this.weekCount[item.week - minWeek] = item.count;
+    }
+    this.weekCount = Array.from(this.weekCount, count => count || 0);
     this.flushCanvas();
     this.books = [
       {

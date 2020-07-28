@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-keys */
 <template>
   <view class="page">
     <view class="header">
@@ -24,7 +25,7 @@
         <canvas
           :id="canvasId"
           class="line-chart"
-          :canvas-id="canvasId"
+          canvas-id="u-canvas"
           :style="canvasStyle"
           @touchstart="touchStart"
           @touchmove="touchMove"
@@ -88,12 +89,10 @@ export default {
     canvasStyle() {
       const { cWidth, cHeight, pixelRatio } = this;
       return calcStyle({
-        pixelRatio,
         width: cWidth * pixelRatio + 'px',
         height: cHeight * pixelRatio + 'px',
         transform: `scale(${1 / pixelRatio})`,
-        marginLeft: (-cWidth * (pixelRatio - 1)) / 2 + 'px',
-        marginTop: (-cHeight * (pixelRatio - 1)) / 2 + 'px',
+        transformOrigin: '0 0',
       });
     },
 
