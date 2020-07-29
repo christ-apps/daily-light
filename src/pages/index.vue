@@ -131,7 +131,7 @@ export default {
           type: 'area',
           pixelRatio: this.pixelRatio,
           enableScroll: true,
-          dataLabel: false,
+          // dataLabel: false,
           categories: count.map((_, i) => i + 1),
           series: [
             {
@@ -146,7 +146,7 @@ export default {
             itemCount: 7,
           },
           yAxis: {
-            // disabled: true,
+            disabled: true,
             format: val => val.toFixed(),
             gridType: 'dash',
             splitNumber: 3,
@@ -194,35 +194,47 @@ export default {
         urls: [this.avatar],
       });
     },
+
+    async getWeekCount() {
+      const [{ result: weekCount }] = await Promise.all([
+        await wx.cloud.callFunction({
+          name: 'getWeekCount',
+          data: {
+            timezoneOffset: new Date().getTimezoneOffset(),
+          },
+        }),
+        new Promise(done => {
+          uni
+            .createSelectorQuery()
+            .select('.chart-canvas')
+            .boundingClientRect(result => {
+              this.cWidth = result.width;
+              this.cHeight = result.height;
+            })
+            .exec(done);
+        }),
+      ]);
+      this.avatar = Mock.Random.image();
+      const minWeek = Math.min(...weekCount.map(item => item.week));
+      this.weekCount = [];
+      for (const item of weekCount) {
+        this.weekCount[item.week - minWeek] = item.count;
+      }
+      this.weekCount = Array.from(this.weekCount, count => count || 0);
+      this.flushCanvas();
+    },
+
+    async getProgress() {
+      const { result } = await wx.cloud.callFunction({
+        name: 'getProgress',
+      });
+      console.log(result);
+    },
   },
 
   async onReady() {
-    const [{ result: weekCount }] = await Promise.all([
-      await wx.cloud.callFunction({
-        name: 'getWeekCount',
-        data: {
-          timezoneOffset: new Date().getTimezoneOffset(),
-        },
-      }),
-      new Promise(done => {
-        uni
-          .createSelectorQuery()
-          .select('.chart-canvas')
-          .boundingClientRect(result => {
-            this.cWidth = result.width;
-            this.cHeight = result.height;
-          })
-          .exec(done);
-      }),
-    ]);
-    this.avatar = Mock.Random.image();
-    const minWeek = Math.min(...weekCount.map(item => item.week));
-    this.weekCount = [];
-    for (const item of weekCount) {
-      this.weekCount[item.week - minWeek] = item.count;
-    }
-    this.weekCount = Array.from(this.weekCount, count => count || 0);
-    this.flushCanvas();
+    this.getWeekCount();
+    this.getProgress();
     this.books = [
       {
         shelfname: '旧约',
