@@ -130,13 +130,14 @@ export default {
 .page {
   &,
   &::v-deep > .loading-view {
-    min-height: calc(100vh - var(--window-top));
+    height: calc(100vh - var(--window-top));
     display: flex;
     flex-direction: column;
   }
 
   &-body {
     flex: 1;
+    overflow: hidden;
   }
 
   &-footer {

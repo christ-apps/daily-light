@@ -55,6 +55,7 @@ import UniIcons from '@/components/uni-icons/uni-icons';
 import calcStyle from '@/util/calc-style.js';
 import uCharts from '@/u-charts/u-charts.js';
 import Mock from 'mockjs';
+import { mapState } from 'vuex';
 export default {
   components: {
     ProgressBar,
@@ -86,6 +87,10 @@ export default {
   },
 
   computed: {
+    ...mapState('book', {
+      shelfs: 'books',
+    }),
+
     canvasStyle() {
       const { cWidth, cHeight, pixelRatio } = this;
       return calcStyle({
@@ -225,106 +230,26 @@ export default {
     },
 
     async getProgress() {
-      const { result } = await wx.cloud.callFunction({
+      const { result: books } = await wx.cloud.callFunction({
         name: 'getProgress',
       });
-      console.log(result);
+      this.books = this.shelfs.map(shelf => ({
+        shelfname: shelf.shelfname,
+        books: shelf.books.map(book => {
+          const { chapters = 0, count = 0 } = books[book.shortname] || {};
+          return {
+            bookname: book.shortname,
+            rate: chapters / book.count,
+            count: chapters === book.count ? count : 0,
+          };
+        }),
+      }));
     },
   },
 
   async onReady() {
     this.getWeekCount();
     this.getProgress();
-    this.books = [
-      {
-        shelfname: '旧约',
-        books: [
-          '创',
-          '出',
-          '利',
-          '民',
-          '申',
-          '书',
-          '士',
-          '得',
-          '撒上',
-          '撒下',
-          '王上',
-          '王下',
-          '代上',
-          '代下',
-          '拉',
-          '尼',
-          '斯',
-          '伯',
-          '诗',
-          '箴',
-          '传',
-          '歌',
-          '赛',
-          '耶',
-          '哀',
-          '结',
-          '但',
-          '何',
-          '珥',
-          '摩',
-          '俄',
-          '拿',
-          '弥',
-          '鸿',
-          '哈',
-          '番',
-          '该',
-          '亚',
-          '玛',
-        ].map(name =>
-          Mock.mock({
-            'bookname': () => name,
-            'rate|0.2': 1,
-            'count|0-5': 1,
-          }),
-        ),
-      },
-      {
-        shelfname: '新约',
-        books: [
-          '太',
-          '可',
-          '路',
-          '约',
-          '徒',
-          '罗',
-          '林前',
-          '林后',
-          '加',
-          '弗',
-          '腓',
-          '西',
-          '帖前',
-          '帖后',
-          '提前',
-          '提后',
-          '多',
-          '门',
-          '来',
-          '雅',
-          '彼前',
-          '彼后',
-          '约一',
-          '约二',
-          '约三',
-          '犹',
-          '启',
-        ].map(name =>
-          Mock.mock({
-            'bookname': () => name,
-            'rate|0.2': 1,
-            'count|0-5': 1,
-          }),
-        ),
-      },
-    ];
   },
 };
 </script>
